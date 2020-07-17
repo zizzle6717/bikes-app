@@ -1,0 +1,8 @@
+openapi: 3.0.0
+info:
+  title: Bikes App
+  description: API documentation for the Bikes App
+  version: 1.0.0
+
+servers:
+  - url: ${SERVICE_HOST}/v1
