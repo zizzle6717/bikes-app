@@ -6,3 +6,57 @@ info:
 
 servers:
   - url: ${SERVICE_HOST}/v1
+
+paths:
+  /stations/{stationId}:
+    get:
+      summary: Get Station
+      description: Get a station by ID
+      tags: 
+        - 'stations'
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+        - $ref: '#/components/parameters/stationId'
+      responses:
+        '200':
+          description: Station
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Station'
+
+        '404':
+          description: Station not found
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    requestId:
+      name: x-requestid
+      required: true
+      in: header
+      description: Unique request ID
+      schema:
+        type: string
+        example: '00000000-0000-0000-0000-000000000000'
+    stationId:
+      name: stationId
+      required: true
+      in: path
+      description: Unique station ID
+      schema:
+        type: string
+        example: '1'
+  schemas:
+    Station:
+      type: object
+      properties:
+        station_id:
+          type: string
+          example: "1"

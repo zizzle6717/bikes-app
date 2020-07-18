@@ -12,7 +12,7 @@ import authenticate from './middleware/authenticate';
 
 // App config and documentation setup
 const app = express();
-const base = '/v1';
+const baseApiRoute = '/v1';
 const swaggerYaml = yaml.load(path.join(__dirname, '../docs/generated/swagger.yaml'));
 const swaggerOptions = {
   customCss: '.servers {display: none}',
@@ -29,7 +29,6 @@ app.use(limiter); // Generic rate limiting on all routes
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(authenticate);
 
 // Routes
 app.use('/docs/generated/swagger.yaml', express.static('docs/generated/swagger.yaml'));
@@ -37,6 +36,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerYaml, swaggerOptions));
 app.use('/coverage', express.static('coverage/'));
 app.use('/_healthz', (req, res) => { res.status(200).json('OK'); });
 
-app.use(base, routes);
+// TODO: Add request caching middleware
+app.use(baseApiRoute, authenticate, routes);
 
 export default app;

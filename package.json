@@ -9,12 +9,12 @@
     "copy:env": "_bin/copy-env.sh",
     "generate:docs": "node --require ./node_modules/dotenv/config scripts/generate-docs.js",
     "init": "npm run copy:env && npm run generate:docs",
-    "lint": "eslint --ext .ts src",
-    "lint:fix": "eslint --ext .ts src --fix",
+    "lint": "eslint --ext .ts src/ tests/",
+    "lint:fix": "eslint --ext .ts src/ tests/ --fix",
     "start": "node --require ./node_modules/dotenv/config dist/index",
-    "test": "tsc && nyc --config ./nyc.config.js mocha --config .mocharc.js --recursive './tests/**/*.test.ts' --require ts-node/register --require source-map-support/register --require ./node_modules/dotenv/config --exit",
-    "test:unit": "tsc && nyc --config ./nyc.config.js --check-coverage=false mocha --config .mocharc.js --recursive './tests/unit/**/*.test.ts' --require ts-node/register --require source-map-support/register --require ./node_modules/dotenv/config --exit",
-    "test:integ": "tsc && nyc --config ./nyc.config.js --check-coverage=false mocha --config .mocharc.js --recursive './tests/integration/**/*.test.ts' --require ts-node/register --require source-map-support/register --require ./node_modules/dotenv/config --exit"
+    "test": "rm -rf ./dist && tsc && nyc --config ./nyc.config.js mocha --config .mocharc.js --recursive './tests/**/*.test.ts' --require ts-node/register --require source-map-support/register --require ./node_modules/dotenv/config --exit",
+    "test:unit": "rm -rf ./dist && tsc && nyc --config ./nyc.config.js --check-coverage=false mocha --config .mocharc.js --recursive './tests/unit/**/*.test.ts' --require ts-node/register --require source-map-support/register --require ./node_modules/dotenv/config --exit",
+    "test:integ": "rm -rf ./dist && tsc && nyc --config ./nyc.config.js --check-coverage=false mocha --config .mocharc.js --recursive './tests/integration/**/*.test.ts' --require ts-node/register --require source-map-support/register --require ./node_modules/dotenv/config --exit"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.3",
     "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
     "rate-limit-redis": "^2.0.0",
     "swagger-ui-express": "^4.1.2",
     "yamljs": "^0.3.0"
