@@ -11,6 +11,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "rules": {
+      "arrow-body-style": "off",
       "arrow-parens": [2, "as-needed"],
       "indent": [2, 2, { "SwitchCase": 1 }],
       "max-len": [2, { "code": 160 }],
