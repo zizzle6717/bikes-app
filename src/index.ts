@@ -20,7 +20,9 @@ const port: number = (process.env.NODE_ENV !== 'production' && parseInt(process.
   || parseInt(process.env.PORT, 10);
 
 // Start server
-
+// NOTE: I'm using nodejs cluster here, although best practice as far as know is to design
+// containers with single responsibility and a single process. I just wanted to show that this is another option
+// that could be implemented depending on circumstances.
 if (cluster.isMaster) {
   // Convoluted way of selecting the MAX_WORKERS env variable or using all cpus on the machine
   const numWorkers = Math.min(os.cpus().length, parseInt(process.env.MAX_WORKERS || String(os.cpus().length), 10));

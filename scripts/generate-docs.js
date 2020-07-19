@@ -13,7 +13,8 @@ let host;
 if (env === 'development') {
   host = `http://localhost:${process.env.PORT}`;
 } else {
-  host = `https://${process.env.DOMAIN}`;
+  // host = `https://${process.env.DOMAIN}`;
+  host = `http://localhost:${process.env.PORT}`;
 }
 
 const generatedYaml = swaggerYaml.replace('${SERVICE_HOST}', host); // eslint-disable-line no-template-curly-in-string
