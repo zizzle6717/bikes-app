@@ -29,6 +29,38 @@ paths:
 
         '404':
           description: Station not found
+  /trips:
+    post:
+      summary: Search Trips
+      description: Search trips with various filters
+      tags: 
+        - 'trips'
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/requestId'
+        - $ref: '#/components/parameters/itemsPerPage'
+        - $ref: '#/components/parameters/order'
+        - $ref: '#/components/parameters/orderBy'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/filterBy'
+        - $ref: '#/components/parameters/query'
+      requestBody:
+        description: Parameters to filter search
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchTripsRequestBody'
+      responses:
+        '200':
+          description: Trip
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+
+        '404':
+          description: Not trips found
 
 components:
   securitySchemes:
@@ -53,10 +85,149 @@ components:
       schema:
         type: string
         example: '1'
+    filterBy:
+      name: filterBy
+      in: query
+      description: the column to filter by
+      schema:
+        type: string
+    itemsPerPage:
+      name: itemsPerPage
+      in: query
+      description: total items to return per page
+      schema:
+        type: string
+        example: '20'
+    order:
+      name: order
+      in: query
+      description: direction to order results by (asc,desc)
+      schema:
+        type: string
+        example: 'asc'
+    orderBy:
+      name: orderBy
+      in: query
+      description: column to order results by
+      schema:
+        type: string
+        example: 'local_end_time'
+    pageNumber:
+      name: pageNumber
+      in: query
+      description: a pageNumber used to offset items returned
+      schema:
+        type: string
+        example: '1'
+    query:
+      name: query
+      in: query
+      description: the value to compare against
+      schema:
+        type: string
   schemas:
     Station:
       type: object
       properties:
+        legacy_id:
+          type: string
+          example: "2"
+        station_type:
+          type: string
+          example: "classic"
+        rental_methods:
+          type: array
+          items:
+            type: string
+            example: "TRANSITCARD"
+        eightd_station_services:
+          type: array
+          items:
+            type: string
+        eightd_has_key_dispenser:
+          type: boolean
+          example: false
+        electric_bike_surcharge_waiver:
+          type: boolean
+          example: false
+        short_name:
+          type: string
+          example: "12345"
+        rental_uris:
+          type: object
+          properties:
+            ios:
+              type: string
+              example: "https://example.com"
+            android:
+              type: string
+              example: "https://example.com"
+        lat:
+          type: string
+          example: "40.0"
+        lon:
+          type: string
+          example: "-80.0"
+        has_kiosk:
+          type: boolean
+          example: true
+        external_id:
+          type: string
+          example: "a3a36d9e-a135-11e9-9cda-0a87ae2ba916"
+        name:
+          type: string
+          example: "Buckingham Fountain"
+        capacity:
+          type: number
+          example: 39
         station_id:
           type: string
+          example: "2"
+    SearchTripsRequestBody:
+      type: object
+      properties:
+        localEndTimeLow:
+          type: string
+          example: "06/04/2020"
+        localEndTimeHigh:
+          type: string
+          example: "06/05/2020"
+    Trip:
+      type: object
+      properties:
+        trip_id:
+          type: string
           example: "1"
+        local_start_time:
+          type: string
+          example: "2019-04-01 00:11:07"
+        local_end_time:
+          type: string
+          example: "2019-04-01 00:15:19"
+        bike_id:
+          type: string
+          example: "2"
+        trip_duration_secs:
+          type: string
+          example: "60.0"
+        station_start_id:
+          type: string
+          example: "3"
+        station_start_name:
+          type: string
+          example: "123 W St"
+        station_end_id:
+          type: string
+          example: "4"
+        station_end_name:
+          type: string
+          example: "321 E St"
+        rider_type:
+          type: string
+          example: "Subscriber"
+        rider_gender:
+          type: string
+          example: "1999"
+        rider_birth_year:
+          type: string
+          example: "1999"

@@ -4,6 +4,8 @@ import { cacheTypes } from '../constants/cacheDetails';
 import cacheResponse from '../utilities/cacheResponse';
 
 const getStation = (req, res) => {
+  req.routeName = 'GetStation';
+
   const { stationId } = req.params;
 
   axios({
@@ -15,13 +17,8 @@ const getStation = (req, res) => {
       const foundStation = stations.find(s => s.station_id === stationId);
 
       if (foundStation) {
-        const response = {
-          routeName: 'getStation',
-          pid: process.pid,
-          station: foundStation,
-        };
-        cacheResponse(req, response, cacheTypes.STATIONS, stationId);
-        return res.status(200).send(response);
+        cacheResponse(req, foundStation, cacheTypes.STATIONS, stationId);
+        return res.status(200).send(foundStation);
       }
 
       return res.status(404).send({

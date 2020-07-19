@@ -60,7 +60,7 @@ describe('Routes', () => {
         .set('authorization', `Bearer ${process.env.MOCK_JWT}`)
         .expect(200);
 
-      expect(response.body.station.station_id).to.be.equal('2');
+      expect(response.body.station_id).to.be.equal('2');
     });
   });
 });

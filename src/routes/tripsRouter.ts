@@ -5,6 +5,6 @@ import {
 
 const router = express.Router();
 
-router.get('/', searchTrips);
+router.post('/', searchTrips);
 
 export default router;
