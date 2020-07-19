@@ -110,3 +110,6 @@ docs/generated
 
 # Mac
 .DS_Store
+
+# Cache
+cache

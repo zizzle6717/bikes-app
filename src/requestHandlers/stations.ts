@@ -1,21 +1,27 @@
 import axios from 'axios';
+import * as constants from '../constants';
+import { cacheTypes } from '../constants/cacheDetails';
+import cacheResponse from '../utilities/cacheResponse';
 
 const getStation = (req, res) => {
   const { stationId } = req.params;
 
   axios({
     method: 'get',
-    url: 'https://gbfs.divvybikes.com/gbfs/en/station_information.json',
+    url: constants.stationsUrl,
   })
     .then(({ data }) => {
       const stations = data && data.data && data.data.stations;
       const foundStation = stations.find(s => s.station_id === stationId);
+
       if (foundStation) {
-        return res.status(200).send({
+        const response = {
           routeName: 'getStation',
           pid: process.pid,
           station: foundStation,
-        });
+        };
+        cacheResponse(req, response, cacheTypes.STATIONS, stationId);
+        return res.status(200).send(response);
       }
 
       return res.status(404).send({
