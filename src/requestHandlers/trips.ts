@@ -1,7 +1,10 @@
 import csv from 'csvtojson';
 import fs from 'fs';
 import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 import { DATA_DIR, DATA_NAME } from '../constants';
+import { cacheTypes } from '../constants/cacheDetails';
+import cacheResponse from '../utilities/cacheResponse';
 
 const tripsCSVFilePath = path.join(DATA_DIR, `${DATA_NAME}.csv`);
 const tripsJSONFilePath = path.join(DATA_DIR, `${DATA_NAME}.json`);
@@ -52,7 +55,7 @@ const searchTrips = async (req, res) => {
       });
     }
 
-    const tripsJSON = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'Divvy_Trips_2019_Q2.json'), { encoding: 'utf8' }));
+    const tripsJSON = JSON.parse(fs.readFileSync(path.join(DATA_DIR, `${DATA_NAME}.json`), { encoding: 'utf8' }));
 
     const filtered = tripsJSON
       .filter(trip => {
@@ -70,13 +73,13 @@ const searchTrips = async (req, res) => {
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     let paginatedResults = filtered;
+
     // Handle Pagination
     if (itemsPerPage && pageNumber) {
       const start = (pageNumber - 1) * itemsPerPage;
       paginatedResults = filtered.slice(start, start + itemsPerPage);
     }
 
-    // TODO: Cache
     const response = {
       pagination: {
         filterBy,
@@ -90,6 +93,9 @@ const searchTrips = async (req, res) => {
       },
       data: paginatedResults,
     };
+    const cacheKey = uuidv4();
+    cacheResponse(req, response, cacheTypes.TRIPS, cacheKey);
+
     return res.status(200).send(response);
   } catch {
     return res.status(500).send({
