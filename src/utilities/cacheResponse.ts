@@ -6,7 +6,7 @@ import getCacheReqTripVal from './getCacheReqTripVal';
 // Non-blocking
 export default (req, response, type: cacheTypes, key: string) => {
   return new Promise((resolve, reject) => {
-    const { requestId } = req.headers['x-requestid'];
+    const requestId = req.headers['x-requestid'];
     if (!fs.existsSync(CACHE_DIR)) { fs.mkdirSync(CACHE_DIR); }
     if (!fs.existsSync(path.join(CACHE_DIR, type))) { fs.mkdirSync(path.join(CACHE_DIR, type)); }
 

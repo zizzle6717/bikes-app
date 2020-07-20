@@ -3,6 +3,7 @@ FROM node:14.5.0
 ENV NODE_ENV "production"
 
 WORKDIR /usr/src/app
+RUN mkdir src
 
 # In actual production code, environment variables would be fetched and loaded during deployment
 # from a vault or using a container orchestrator. Here I'm just using the example env variables.
@@ -10,6 +11,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY .env.template ./
 COPY ./dist/ ./dist/
+COPY ./src/data/ ./src/data/
 COPY ./docs/ ./docs/
 COPY ./scripts/ ./scripts/
 COPY ./_bin/ ./_bin/

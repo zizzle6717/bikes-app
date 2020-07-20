@@ -36,7 +36,6 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerYaml, swaggerOptions));
 app.use('/coverage', express.static('coverage/'));
 app.use('/_healthz', (req, res) => { res.status(200).json('OK'); });
 
-// TODO: Add request caching middleware
 app.use(baseApiRoute, authenticate, routes);
 
 export default app;

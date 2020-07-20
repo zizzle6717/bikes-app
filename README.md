@@ -30,3 +30,9 @@ Typescript is intentionally configured as to not enforce strict typing and allow
 
 ## Linting and Pre-Commit/Pre-Push Hooks
 Run `npm run lint` or `npm run lint:fix` to check for linting errors. With the included pre-commit hooks, code is required to be free of any lint errors to complete a git commit. A pre-push hook is also implemented to require all tests to pass before pushing to a remote. To manually override these hooks simply add `--no-verify` to the end of either command.
+
+## Docker
+Build `npm run docker:build`
+Run `npm run docker:run`
+Stop `npm run docker:stop`
+Remove `npm run docker:remove`

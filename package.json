@@ -7,7 +7,7 @@
     "build": "rm -rf ./dist && webpack --config webpack.config.js",
     "build:watch": "rm -rf ./dist && webpack --config webpack.config.js --watch",
     "copy:env": "./_bin/copy-env.sh",
-    "docker:build": "docker build --tag bikes-app .",
+    "docker:build": "npm run build && docker build --tag bikes-app .",
     "docker:run": "docker run --name my-bikes-app -p 9000:9000 -d bikes-app",
     "docker:stop": "docker container stop my-bikes-app",
     "docker:remove": "docker container rm my-bikes-app -f",
