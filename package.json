@@ -61,7 +61,7 @@
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-loader": "^3.0.4",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.20.2",
     "husky": "^3.1.0",
     "mocha": "^6.0.2",
@@ -70,11 +70,11 @@
     "sinon": "^7.5.0",
     "source-map-support": "^0.5.16",
     "supertest": "^4.0.2",
-    "ts-loader": "^6.2.1",
+    "ts-loader": "^9.4.2",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.4",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "webpack-node-externals": "^1.7.2"
   }
 }
